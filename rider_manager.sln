@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rider_manager", "rider_manager.csproj", "{0FB63877-1C96-48F6-BB82-129FC76425D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ride_choser_model_WebApi1", "..\Ride_choser_model_WebApi1\Ride_choser_model_WebApi1.csproj", "{3D1619AD-646A-4CFF-8003-FA9EC2D2BF12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FB63877-1C96-48F6-BB82-129FC76425D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FB63877-1C96-48F6-BB82-129FC76425D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FB63877-1C96-48F6-BB82-129FC76425D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FB63877-1C96-48F6-BB82-129FC76425D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D1619AD-646A-4CFF-8003-FA9EC2D2BF12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D1619AD-646A-4CFF-8003-FA9EC2D2BF12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D1619AD-646A-4CFF-8003-FA9EC2D2BF12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D1619AD-646A-4CFF-8003-FA9EC2D2BF12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C0FD7E4-5C14-4506-BCD9-6C8985540E3D}
+	EndGlobalSection
+EndGlobal
