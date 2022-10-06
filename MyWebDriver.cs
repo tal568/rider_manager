@@ -46,15 +46,18 @@ namespace whatapp_ride_joiner
         }
         public IList<IWebElement> GetMassges()
         {
-            DateTime today = DateTime.Today;
+            DateTime today = DateTime.Now;
+            today=today.AddMinutes(-1);
             string format_today = today.ToString("yyyy");
+            //HH:mm, dd/MM/
             string get_messages_by_xpath = $"//*[contains(@class,'message-in')]//div[@data-testid='msg-container']//*[contains(@data-pre-plain-text,'{format_today}')]";
-            Console.WriteLine("loading messages pres enter when done");
-            Console.ReadLine();
+          //  Console.WriteLine("loading messages pres enter when done");
+          //  Console.ReadLine();
             IList<IWebElement> messages = driver.FindElements(By.XPath(get_messages_by_xpath));
 
             return messages;
         }
+
 
         public void Replay(IWebElement element)
         {
@@ -69,7 +72,7 @@ namespace whatapp_ride_joiner
             reply.Click();
             string inp_xpath = "//p[@class='selectable-text copyable-text']";
             IWebElement input_box = driver.FindElement(By.XPath(inp_xpath));
-            input_box.SendKeys(text);
+            input_box.SendKeys(text +Keys.Enter);
 
         }
 

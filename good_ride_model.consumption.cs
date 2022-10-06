@@ -7,10 +7,10 @@ using System.IO;
 using System.Collections.Generic;
 namespace Rider_manager
 {
-    public partial class Ride_choser_model
+    public partial class Good_ride_model
     {
         /// <summary>
-        /// model input class for Ride_choser_model.
+        /// model input class for Good_ride_model.
         /// </summary>
         #region model input class
         public class ModelInput
@@ -26,7 +26,7 @@ namespace Rider_manager
         #endregion
 
         /// <summary>
-        /// model output class for Ride_choser_model.
+        /// model output class for Good_ride_model.
         /// </summary>
         #region model output class
         public class ModelOutput
@@ -50,7 +50,7 @@ namespace Rider_manager
 
         #endregion
 
-        private static string MLNetModelPath = Path.GetFullPath("ride_choser_model.zip");
+        private static string MLNetModelPath = Path.GetFullPath("good_ride_model.zip");
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

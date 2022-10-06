@@ -1,10 +1,10 @@
 ﻿{
-  "TrainingTime": 20,
+  "TrainingTime": 10800,
   "Scenario": "Classification",
   "DataSource": {
     "Type": "TabularFile",
     "Version": 1,
-    "FilePath": "C:\\My Projects\\riders.csv",
+    "FilePath": "C:\\My Projects\\python_shap_data\\rider_no_dup.csv",
     "Delimiter": ",",
     "DecimalMarker": ".",
     "HasHeader": false,
@@ -38,37 +38,37 @@
       {
         "Version": 0,
         "Type": "Trial",
-        "TrainerName": "LbfgsLogisticRegressionOva",
-        "Score": 0.86183574879227054,
-        "RuntimeInSeconds": 0.31
-      },
-      {
-        "Version": 0,
-        "Type": "Trial",
-        "TrainerName": "LbfgsMaximumEntropyMulti",
-        "Score": 0.86183574879227054,
-        "RuntimeInSeconds": 0.052
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.96634615384615385,
+        "RuntimeInSeconds": 0.164
       },
       {
         "Version": 0,
         "Type": "Trial",
         "TrainerName": "LightGbmMulti",
-        "Score": 0.85700483091787438,
-        "RuntimeInSeconds": 0.091
+        "Score": 0.95993589743589747,
+        "RuntimeInSeconds": 0.251
       },
       {
         "Version": 0,
         "Type": "Trial",
-        "TrainerName": "FastTreeOva",
-        "Score": 0.81739130434782614,
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.95993589743589747,
         "RuntimeInSeconds": 0.231
       },
       {
         "Version": 0,
         "Type": "Trial",
-        "TrainerName": "LbfgsMaximumEntropyMulti",
-        "Score": 0.80628019323671507,
-        "RuntimeInSeconds": 0.188
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.95993589743589747,
+        "RuntimeInSeconds": 0.234
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.95993589743589747,
+        "RuntimeInSeconds": 0.237
       }
     ],
     "Pipeline": {
@@ -88,20 +88,19 @@
           "InputColumnName": "col1"
         },
         "3": {
-          "OutputColumnNames": [
-            "Features"
-          ],
-          "InputColumnNames": [
-            "Features"
-          ]
-        },
-        "4": {
-          "L1Regularization": 0.306796163,
-          "L2Regularization": 0.0414397866,
+          "NumberOfLeaves": 4,
+          "MinimumExampleCountPerLeaf": 28,
+          "LearningRate": 0.99999977667298645,
+          "NumberOfTrees": 48,
+          "SubsampleFraction": 0.64832739540178452,
+          "MaximumBinCountPerFeature": 90,
+          "FeatureFraction": 0.56127619494613679,
+          "L1Regularization": 2E-10,
+          "L2Regularization": 0.99999977667298645,
           "LabelColumnName": "col1",
           "FeatureColumnName": "Features"
         },
-        "5": {
+        "4": {
           "OutputColumnName": "PredictedLabel",
           "InputColumnName": "PredictedLabel"
         }
@@ -110,8 +109,7 @@
         "FeaturizeText",
         "Concatenate",
         "MapValueToKey",
-        "NormalizeMinMax",
-        "LbfgsLogisticRegressionOva",
+        "LightGbmMulti",
         "MapKeyToValue"
       ]
     },
