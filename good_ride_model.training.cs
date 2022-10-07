@@ -38,7 +38,7 @@ namespace Rider_manager
             var pipeline = mlContext.Transforms.Text.FeaturizeText(inputColumnName:@"col0",outputColumnName:@"col0")      
                                     .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"col0"}))      
                                     .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName:@"col1",inputColumnName:@"col1"))      
-                                    .Append(mlContext.MulticlassClassification.Trainers.LightGbm(new LightGbmMulticlassTrainer.Options(){NumberOfLeaves=4,NumberOfIterations=48,MinimumExampleCountPerLeaf=28,LearningRate=0.999999776672986,LabelColumnName=@"col1",FeatureColumnName=@"Features",ExampleWeightColumnName=null,Booster=new GradientBooster.Options(){SubsampleFraction=0.648327395401785,FeatureFraction=0.561276194946137,L1Regularization=2E-10,L2Regularization=0.999999776672986},MaximumBinCountPerFeature=90}))      
+                                    .Append(mlContext.MulticlassClassification.Trainers.LightGbm(new LightGbmMulticlassTrainer.Options(){NumberOfLeaves=1776,NumberOfIterations=41,MinimumExampleCountPerLeaf=28,LearningRate=0.82333572393922,LabelColumnName=@"col1",FeatureColumnName=@"Features",ExampleWeightColumnName=null,Booster=new GradientBooster.Options(){SubsampleFraction=0.636548707276657,FeatureFraction=0.570291337757743,L1Regularization=2E-10,L2Regularization=0.601278210646982},MaximumBinCountPerFeature=447}))      
                                     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName:@"PredictedLabel",inputColumnName:@"PredictedLabel"));
 
             return pipeline;

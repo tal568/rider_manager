@@ -11,6 +11,9 @@
     <PackageReference Include="Microsoft.ML.LightGbm" Version="1.7.1" />
     <PackageReference Include="Selenium.Support" Version="4.4.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GoodRideModel\GoodRideModel.csproj" />
+  </ItemGroup>
   <ItemGroup Label="good_ride_model">
     <None Include="good_ride_model.consumption.cs">
       <DependentUpon>good_ride_model.mbconfig</DependentUpon>
@@ -22,8 +25,5 @@
       <DependentUpon>good_ride_model.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GoodRideModel\GoodRideModel.csproj" />
   </ItemGroup>
 </Project>
