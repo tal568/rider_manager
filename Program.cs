@@ -1,87 +1,70 @@
-﻿using OpenQA.Selenium;
-using rider_manager;
-using System.Collections.Generic;
-using System.IO;
-using RideModel;
-namespace whatapp_ride_joiner
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using whatapp_ride_joiner;
+using Log = Serilog.Log;
+
+namespace DependecyInj
 {
-    public class ride_manger
+    class Program
     {
         public static async Task Main(string[] args)
         {
+            var builder = new ConfigurationBuilder();
+            BuildConfig(builder);
 
-            MyWebDriver webdriver = new MyWebDriver();
-            webdriver.choose_group("אבא");
-                  var timer = new PeriodicTimer(TimeSpan.FromSeconds(50));
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Build())
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+            Log.Logger.Information("Application Starting");
 
-                  while (await timer.WaitForNextTickAsync())
-                  {
-                      IList<IWebElement> messages = webdriver.GetMassges();
-
-
-                      IWebElement? best_message = FilterMessagesNlp(messages);
-
-
-                      if (best_message != null)
-                      {
-                          webdriver.Replay(best_message);
-                        //  timer.Dispose();
-
-                     //     webdriver.Close();
-                      }
-                      Console.WriteLine("alive");
-                   
-
-
-                  }
-         //  Console.WriteLine("with to load");
-         //  Console.ReadLine();
-         //  IList<IWebElement> messages = webdriver.GetMassges();
-         //  TrainNlp(messages);
-        }
-
-
-
-
-            public static IWebElement? FilterMessagesNlp(IList<IWebElement> messages)
-            {
-            float best_ride = 0.65f;
-            IWebElement best_message=null;
-            foreach (IWebElement message in messages) 
-            {
-                NlpMessages predicted_message = new NlpMessages(message.Text);
-                if (predicted_message.Label==2 && predicted_message.Confidnes[2]> best_ride) 
+            var host = Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) =>
                 {
-                    best_message=message;
-                    best_ride=predicted_message.Confidnes[3];
-                }
-                string save = "for: " + message.Text + "\n % was: " + String.Join($"\n",predicted_message.Confidnes);
-                save_messages(save);
-            }
-            return best_message ;
-        }
+                    services.AddSingleton<IRideManger, RideManger>();
 
 
+                })
+                .UseSerilog()
+                .Build();
 
-        public static void TrainNlp(IList<IWebElement> messages)
-        {
-            using (StreamWriter writer = new StreamWriter(@".\saved_text_nlp\messages.txt"))
+            var ride_manger = ActivatorUtilities.CreateInstance<RideManger>(host.Services);
+
+            int wait_sec = builder.Build().GetValue<int>("wait_sec");
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(wait_sec));
+            Log.Logger.Information("wating for next tik in {sec}", wait_sec);
+            while (await timer.WaitForNextTickAsync())
             {
-                foreach (IWebElement message in messages)
+                try
                 {
-                    writer.WriteLine(message.Text.Replace('\n', ' ').Replace(',','.'));
+                    bool found_ride=ride_manger.LoadMassages()
+                    .ChoseMassage()
+                    .ReplayToChosenMassage();
+
+
+                    if (found_ride)
+                        timer.Dispose();
                 }
+                catch (Exception e)
+                {
+                    Log.Logger.Error("failed to run " + e.Message + "\n" + e.StackTrace);
+                }
+
+
             }
         }
-        public static void save_messages(string txt)
+        static void BuildConfig(IConfigurationBuilder builder)
         {
-            using (StreamWriter writer = new StreamWriter(@".\saved_text_nlp\messages_saved.txt"))
-            {
-                
-                
-                    writer.WriteLine(txt.Replace('\n', ' '));
-                
-            }
+            builder.SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+                .AddEnvironmentVariables();
+
         }
     }
 }
+
+

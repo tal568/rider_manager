@@ -1,9 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
 namespace whatapp_ride_joiner
 {
@@ -11,16 +10,33 @@ namespace whatapp_ride_joiner
     class MyWebDriver
     {
         IWebDriver driver;
-        public MyWebDriver()
+        private readonly ILogger _log;
+        private readonly IConfiguration _config;
+
+        public MyWebDriver(ILogger log, IConfiguration config)
         {
+            _log = log;
+            _config = config;
             driver = new ChromeDriver(@"C:\My Projects");
             driver.Url = "https://web.whatsapp.com";
-            string btn_start_xpath = "//button[@aria-label='Search or start new chat']";
+            string btn_start_xpath = _config.GetValue<string>("btn_start_xpath");
             Console.WriteLine("scan QR code");
             Console.ReadLine();
             IWebElement start = driver.FindElement(By.XPath(btn_start_xpath));
             start.Click();
             Thread.Sleep(100);
+            try
+            {
+                choose_group(_config.GetValue<string>("Groupname"));
+            }
+            catch (Exception e)
+            {
+                _log.LogError("could not find the groupname pleas change it in the setting file \n" + "exption:" + e.Message);
+                throw;
+            }
+
+
+
         }
         public void Close()
         {
@@ -40,22 +56,27 @@ namespace whatapp_ride_joiner
         }
         public void choose_group(string group)
         {
-            string chat_xpath = $"//span[@title='{group}']";
+            string chat_xpath = String.Format(_config.GetValue<string>("chat_xpath"), group);
             IWebElement chat = driver.FindElement(By.XPath(chat_xpath));
             chat.Click();
         }
-        public IList<IWebElement> GetMassges()
+        public IList<IWebElement> GetMassages()
         {
             DateTime today = DateTime.Now;
-            today=today.AddMinutes(-1);
-            string format_today = today.ToString("yyyy");
-            //HH:mm, dd/MM/
-            string get_messages_by_xpath = $"//*[contains(@class,'message-in')]//div[@data-testid='msg-container']//*[contains(@data-pre-plain-text,'{format_today}')]";
-          //  Console.WriteLine("loading messages pres enter when done");
-          //  Console.ReadLine();
-            IList<IWebElement> messages = driver.FindElements(By.XPath(get_messages_by_xpath));
+            today = today.AddMinutes(-1);
+            string format_today = today.ToString(_config.GetValue<string>("Timeformate"));
+            //HH:mm, dd/MM/yyyy
+            string get_messages_by_xpath = String.Format(_config.GetValue<string>("get_messages_by_xpath"), format_today);
+            //  Console.WriteLine("loading messages pres enter when done");
+            //  Console.ReadLine();
 
+            IList<IWebElement> messages = driver.FindElements(By.XPath(get_messages_by_xpath));
             return messages;
+
+
+
+
+
         }
 
 
@@ -64,15 +85,15 @@ namespace whatapp_ride_joiner
             string text = "אני";
             Actions a = new Actions(driver);
             a.MoveToElement(element).Perform();
-            string menue_xpath = "//div[@data-testid='icon-down-context']";
+            string menue_xpath = _config.GetValue<string>("menue_xpath");
             IWebElement menue = driver.FindElement(By.XPath(menue_xpath));
             menue.Click();
-            string reply_xpath = "//div[@aria-label='Reply']";
-            IWebElement reply = driver.FindElement(By.XPath(reply_xpath));
+            string reply_btn_xpath = _config.GetValue<string>("reply_btn_xpath");
+            IWebElement reply = driver.FindElement(By.XPath(reply_btn_xpath));
             reply.Click();
-            string inp_xpath = "//p[@class='selectable-text copyable-text']";
-            IWebElement input_box = driver.FindElement(By.XPath(inp_xpath));
-            input_box.SendKeys(text +Keys.Enter);
+            string input_text_xpath = _config.GetValue<string>("input_text_xpath");
+            IWebElement input_box = driver.FindElement(By.XPath(input_text_xpath));
+            input_box.SendKeys(text + Keys.Enter);
 
         }
 
