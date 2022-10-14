@@ -40,7 +40,7 @@ namespace DependecyInj
             {
                 try
                 {
-                    bool found_ride=ride_manger.LoadMassages()
+                    bool found_ride = ride_manger.LoadMassages()
                     .ChoseMassage()
                     .ReplayToChosenMassage();
 

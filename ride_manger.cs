@@ -37,7 +37,7 @@ namespace whatapp_ride_joiner
             if (massages == null)
                 return this;
 
-          
+
 
             chosen_massage = PredicBestRideMassage(massages);
             if (chosen_massage != null)
