@@ -1,70 +1,57 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using rider_manager;
+using rider_manager.Interfaces;
+using rider_manager.servises;
 using Serilog;
-using whatapp_ride_joiner;
-using Log = Serilog.Log;
+using whatsapp_ride_joiner;
+using WorkerService1;
 
-namespace DependecyInj
-{
-    class Program
+var builder = WebApplication.CreateBuilder();
+var configurationBuilder = new ConfigurationBuilder();
+BuildConfig(configurationBuilder);
+
+Log.Logger = new LoggerConfiguration()
+      .ReadFrom.Configuration(configurationBuilder.Build())
+            .Enrich.FromLogContext()
+            .WriteTo.Console()
+            .CreateLogger();
+Log.Logger.Information("Application Starting");
+
+//after create the builder - UseSerilog
+
+builder.Host.UseSerilog();
+
+
+IHost host = Host.CreateDefaultBuilder(args)
+    .ConfigureServices(services =>
     {
-        public static async Task Main(string[] args)
-        {
-            var builder = new ConfigurationBuilder();
-            BuildConfig(builder);
+        services.AddSingleton<INlpMessages, NlpMessages>();
+        services.AddSingleton<IRideManger, RideManger>();
+        services.AddSingleton<IMyWebDriver, MyWebDriver>();
+        services.AddHostedService<Worker>();
+    })
+    .UseSerilog()
+    .Build();
 
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(builder.Build())
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
-            Log.Logger.Information("Application Starting");
+await host.RunAsync();
 
-            var host = Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) =>
-                {
-                    services.AddSingleton<IRideManger, RideManger>();
-
-
-                })
-                .UseSerilog()
-                .Build();
-
-            var ride_manger = ActivatorUtilities.CreateInstance<RideManger>(host.Services);
-
-            int wait_sec = builder.Build().GetValue<int>("wait_sec");
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(wait_sec));
-            Log.Logger.Information("wating for next tik in {sec}", wait_sec);
-            while (await timer.WaitForNextTickAsync())
-            {
-                try
-                {
-                    bool found_ride = ride_manger.LoadMassages()
-                    .ChoseMassage()
-                    .ReplayToChosenMassage();
-
-
-                    if (found_ride)
-                        timer.Dispose();
-                }
-                catch (Exception e)
-                {
-                    Log.Logger.Error("failed to run " + e.Message + "\n" + e.StackTrace);
-                }
-
-
-            }
-        }
-        static void BuildConfig(IConfigurationBuilder builder)
-        {
-            builder.SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
-                .AddEnvironmentVariables();
-
-        }
-    }
+static void BuildConfig(IConfigurationBuilder builder)
+{
+    builder.SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Prod"}.json", optional: true)
+        .AddEnvironmentVariables();
 }
+
+
+
+
+
+
+
+
 
 

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
+using rider_manager.servises;
 
-namespace whatapp_ride_joiner
+namespace rider_manager.Interfaces
 {
     public interface IRideManger
     {

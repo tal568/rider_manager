@@ -12,7 +12,7 @@ namespace Rider_manager
         public class ModelInput
         {
             [ColumnName(@"col0")]
-            public string Col0 { get; set; }
+            public string? Col0 { get; set; }
 
             [ColumnName(@"col1")]
             public float Col1 { get; set; }
@@ -28,19 +28,25 @@ namespace Rider_manager
         public class ModelOutput
         {
             [ColumnName(@"col0")]
+#pragma warning disable CS8618 // Non-nullable property 'Col0' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
             public float[] Col0 { get; set; }
+#pragma warning restore CS8618 // Non-nullable property 'Col0' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
 
             [ColumnName(@"col1")]
             public uint Col1 { get; set; }
 
             [ColumnName(@"Features")]
+#pragma warning disable CS8618 // Non-nullable property 'Features' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
             public float[] Features { get; set; }
+#pragma warning restore CS8618 // Non-nullable property 'Features' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
 
             [ColumnName(@"PredictedLabel")]
             public float PredictedLabel { get; set; }
 
             [ColumnName(@"Score")]
+#pragma warning disable CS8618 // Non-nullable property 'Score' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
             public float[] Score { get; set; }
+#pragma warning restore CS8618 // Non-nullable property 'Score' must contain a non-null value when exiting constructor. Consider declaring the property as nullable.
 
         }
 
