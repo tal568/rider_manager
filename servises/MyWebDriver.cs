@@ -55,7 +55,7 @@ public class MyWebDriver : IMyWebDriver
         ChromeOptions options = new();
         options.AddArguments("--user-data-dir=" + @"C:\Users\tal\AppData\Local\Google\Chrome\User Data\tal_ride");
 
-        driver = new ChromeDriver(@"C:\My Projects", options);
+       driver = new ChromeDriver(@"C:\My Projects", options);
         driver.Url = "https://web.whatsapp.com";
         int tries = 0, maxTries = _config.GetValue<int>("maxtriesToAuthentication");
         bool worked = false;
