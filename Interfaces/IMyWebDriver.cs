@@ -6,7 +6,7 @@ namespace rider_manager.Interfaces
     {
         void choose_group(string group);
         void Close();
-        IList<IWebElement> GetMassages();
+        IList<IWebElement> GetMassages(int min_ago);
         string GetPage();
         void Replay(IWebElement element);
     }

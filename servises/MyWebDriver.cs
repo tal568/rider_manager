@@ -35,7 +35,7 @@ public class MyWebDriver : IMyWebDriver
         }
         catch (Exception e)
         {
-            _log.LogError("error while tring to authentication to whatsapp  try number {tries} of {maxTries}", tries, maxTries);
+            _log.LogError("error while tring to authentication to whatsapp  try number {tries} of {maxTries}\n Exception:{e}", tries, maxTries,e);
             if (tries < maxTries)
             {
                 return false;
@@ -49,7 +49,6 @@ public class MyWebDriver : IMyWebDriver
             }
 
         }
-        return false;
     }
     public void initWebDriver()
     {
@@ -91,10 +90,10 @@ public class MyWebDriver : IMyWebDriver
         IWebElement chat = driver.FindElement(By.XPath(chat_xpath));
         chat.Click();
     }
-    public IList<IWebElement> GetMassages()
+    public IList<IWebElement> GetMassages(int min_ago)
     {
         DateTime today = DateTime.Now;
-        today = today.AddMinutes(-1);
+        today = today.AddMinutes(-min_ago);
         string format_today = today.ToString(_config.GetValue<string>("Timeformate"));
         //HH:mm, dd/MM/yyyy
         string get_messages_by_xpath = String.Format(_config.GetValue<string>("get_messages_by_xpath"), format_today);

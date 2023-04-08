@@ -22,7 +22,7 @@
     <ProjectReference Include="..\RideModel_WebApi1\RideModel_WebApi1.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="appsettings.json">
+    <None Update="Config\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -25,7 +25,7 @@ Log.Logger.Information("Application Starting");
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddSingleton<INlpMessages, NlpMessages>();
+        services.AddSingleton<INlpPredict, NlpPredict>();
         services.AddSingleton<IRideManger, RideManger>();
         services.AddSingleton<IMyWebDriver, MyWebDriver>();
         services.AddHostedService<Worker>();

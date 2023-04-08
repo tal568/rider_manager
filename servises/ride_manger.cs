@@ -11,20 +11,20 @@ public class RideManger : IRideManger
     private readonly ILogger<RideManger> _log;
     private readonly IConfiguration _config;
     private readonly IMyWebDriver _webDriver;
-    private readonly INlpMessages _nlpMessages;
+    private readonly INlpPredict _nlpPredict;
     private IWebElement? chosen_massage;
 
 
-    public RideManger(ILogger<RideManger> log, IConfiguration config, IMyWebDriver webDriver, INlpMessages nlpMessages)
+    public RideManger(ILogger<RideManger> log, IConfiguration config, IMyWebDriver webDriver, INlpPredict nlpPredict)
     {
         _log = log;
         _config = config;
         _webDriver = webDriver;
-        _nlpMessages = nlpMessages;
+        _nlpPredict = nlpPredict;
     }
     public RideManger LoadMassages()
     {
-        massages = _webDriver.GetMassages();
+        massages = _webDriver.GetMassages(1);
         if (massages != null)
             _log.LogInformation("found/saved group messages");
         else
@@ -65,13 +65,13 @@ public class RideManger : IRideManger
         IWebElement? best_message = null;
         foreach (IWebElement message in massages)
         {
-            _nlpMessages.NlpLoadMessage(message.Text);
-            if (_nlpMessages.Label == 2 && _nlpMessages.Confidnes.Max() > best_ride)
+            _nlpPredict.NlpPredictText(message.Text);
+            if (_nlpPredict.Label == 2 && _nlpPredict.Confidnes.Max() > best_ride)
             {
                 best_message = message;
-                best_ride = _nlpMessages.Confidnes[2];
+                best_ride = _nlpPredict.Confidnes[2];
             }
-            string save = "\nfor message:" + message.Text + "the results where" + _nlpMessages.Label + "  % was: " + _nlpMessages.Confidnes.Max();
+            string save = "\nfor message:" + message.Text + "the results where" + _nlpPredict.Label + "  % was: " + _nlpPredict.Confidnes.Max();
             _log.LogInformation(save);
         }
         return best_message;

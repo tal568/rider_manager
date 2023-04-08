@@ -16,7 +16,7 @@ namespace Rider_manager
         public class ModelInput
         {
             [ColumnName(@"col0")]
-            public string Col0 { get; set; }
+            public string? Col0 { get; set; }
 
             [ColumnName(@"col1")]
             public float Col1 { get; set; }
@@ -32,19 +32,19 @@ namespace Rider_manager
         public class ModelOutput
         {
             [ColumnName(@"col0")]
-            public float[] Col0 { get; set; }
+            public float[]? Col0 { get; set; }
 
             [ColumnName(@"col1")]
             public uint Col1 { get; set; }
 
             [ColumnName(@"Features")]
-            public float[] Features { get; set; }
+            public float[]? Features { get; set; }
 
             [ColumnName(@"PredictedLabel")]
             public float PredictedLabel { get; set; }
 
             [ColumnName(@"Score")]
-            public float[] Score { get; set; }
+            public float[]? Score { get; set; }
 
         }
 
