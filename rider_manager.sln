@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "rider_manager", "rider_manager.csproj", "{37A0F326-4200-47C7-B658-400C20E9BF29}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RideModel_WebApi1", "..\RideModel_WebApi1\RideModel_WebApi1.csproj", "{0804686A-709A-4453-B7AF-CC5D4A3BE6B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{37A0F326-4200-47C7-B658-400C20E9BF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37A0F326-4200-47C7-B658-400C20E9BF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37A0F326-4200-47C7-B658-400C20E9BF29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0804686A-709A-4453-B7AF-CC5D4A3BE6B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0804686A-709A-4453-B7AF-CC5D4A3BE6B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0804686A-709A-4453-B7AF-CC5D4A3BE6B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0804686A-709A-4453-B7AF-CC5D4A3BE6B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

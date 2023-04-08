@@ -11,11 +11,15 @@
     <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.0-preview.22621.2" />
     <PackageReference Include="Microsoft.ML.LightGbm" Version="3.0.0-preview.22621.2" />
     <PackageReference Include="Selenium.Support" Version="4.8.2" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0-preview.2.23128.3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="112.0.5615.4900" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="5.1.0-dev-00123" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="4.0.0-dev-00486" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.1-dev-00910" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RideModel_WebApi1\RideModel_WebApi1.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">

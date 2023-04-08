@@ -43,7 +43,7 @@ public class MyWebDriver : IMyWebDriver
             }
             else
             {
-                _log.LogError("could not authentication to whatapp {max_times} times pleas chek what wrong and if whatapp loaded pres enter to countinue", maxTries);
+                _log.LogError("could not authentication to whatapp {max_times} times pleas chek what wrong and if whatapp loaded pres enter to countinue .\n the error is {error}", maxTries);
                 Console.ReadKey();
                 return true;
             }

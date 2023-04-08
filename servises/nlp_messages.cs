@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using OpenQA.Selenium;
-using RideModel;
-
+using RideModel_WebApi1;
 namespace rider_manager;
 
 public interface INlpMessages
@@ -27,13 +26,13 @@ public class NlpMessages : INlpMessages
 
     public void NlpLoadMessage(string message)
     {
-        var sampleData = new GoodRideModel.ModelInput()
+        var sampleData = new RideModel.ModelInput()
         {
             Col0 = message
         };
 
         //Load model and predict output
-        var result = GoodRideModel.Predict(sampleData);
+        var result = RideModel.Predict(sampleData);
         Confidnes = new float[result.Score.Length];
         this.Confidnes = result.Score;
 
