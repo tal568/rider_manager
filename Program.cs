@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using rider_manager;
@@ -9,7 +8,6 @@ using Serilog;
 using whatsapp_ride_joiner;
 using WorkerService1;
 
-var builder = WebApplication.CreateBuilder();
 var configurationBuilder = new ConfigurationBuilder();
 BuildConfig(configurationBuilder);
 
@@ -22,7 +20,6 @@ Log.Logger.Information("Application Starting");
 
 //after create the builder - UseSerilog
 
-builder.Host.UseSerilog();
 
 
 IHost host = Host.CreateDefaultBuilder(args)
